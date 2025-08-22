@@ -67,7 +67,7 @@ class I2SSPLMeter : public PollingComponent, public Sensor {
     }
     double rms = sqrt(sumsq / (double)samples);
 
-    // Convert to dBFS relative to full-scale sine RMS
+    // dBFS relative to full-scale sine RMS (= 1/sqrt(2))
     const double fs_rms = 1.0 / 1.41421356237;
     double dbfs = -120.0;
     if (rms > 1e-12) {
