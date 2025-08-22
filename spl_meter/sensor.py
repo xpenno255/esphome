@@ -1,11 +1,7 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import sensor
-from esphome.const import (
-    CONF_ID,
-    UNIT_DECIBEL,
-    ICON_VOLUME_HIGH,
-)
+from esphome.const import CONF_ID, UNIT_DECIBEL
 
 DEPENDENCIES = ["esp32"]
 
@@ -14,7 +10,7 @@ I2SSPLMeter = spl_meter_ns.class_("I2SSPLMeter", sensor.Sensor, cg.PollingCompon
 
 CONFIG_SCHEMA = sensor.sensor_schema(
     unit_of_measurement=UNIT_DECIBEL,
-    icon=ICON_VOLUME_HIGH,
+    icon="mdi:volume-high",        # use the literal icon name (no const)
     accuracy_decimals=1,
 ).extend({
     cv.Required("bclk_pin"): cv.int_,
@@ -37,3 +33,4 @@ async def to_code(config):
     )
     await cg.register_component(var, config)
     await sensor.register_sensor(var, config)
+    cg.add_include("spl_meter.h")  # ensure the header is compiled in
